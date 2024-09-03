@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mickey's Weather</title>
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/contact/">Who We Are</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Check the Weather</h1>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="city" placeholder="Enter city name">
+                <button type="submit">Get Weather</button>
+            </form>
+            {% if city %}
+                <div id="weatherInfo">
+                    <h2>Weather in {{ city }}</h2>
+                    <p>Temperature: {{ temperature }}°C</p>
+                    <p>Wind Speed: {{ wind_speed }} km/h</p>
+                    <p>Conditions: {{ conditions }}</p>
+                    <p>Humidity: {{ humidity }}%</p>
+                </div>
+            {% elif error %}
+                <div id="weatherInfo">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            <div id="weatherInfo">
+                <!-- Weather information will be displayed here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mickey's Weather. All rights reserved.</p>
+    </footer>
+</body>
+</html>
